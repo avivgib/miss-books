@@ -8,12 +8,32 @@
 
     background-color: var(--gray3);
     color: var(--clr1bg-light);
+
+    font-family: "Arial", sans-serif;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-style: italic;
 }
 
 .nav-links {
     display: flex;
     gap: 22px;
     margin-inline-end: 20px;
+}
+
+.nav-links button {
+    background: none;
+    border: none;
+    color: #f5f5f5;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.nav-links button:hover {
+    color: #ffd700;
 }
 
 .nav-links a {
@@ -36,4 +56,14 @@
     border-color: rgb(226, 158, 81);
     box-shadow: 0 0 3px 2px gold;
     transform: scale(1.1);
+}
+
+/* Responsive style */
+.menu-toggle {
+    display: none;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
 }
