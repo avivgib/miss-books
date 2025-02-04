@@ -1,5 +1,39 @@
 .app-header {
-    background-color: var(--clr3);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    padding-block: .5em;
+    padding-inline: 18px;
+
+    background-color: var(--gray3);
     color: var(--clr1bg-light);
-    padding-block: 1em;
+}
+
+.nav-links {
+    display: flex;
+    gap: 22px;
+    margin-inline-end: 20px;
+}
+
+.nav-links a {
+    padding: 5px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    box-shadow: none;
+    transition: all 0.3s ease-in-out;
+}
+
+.nav-links a:hover {
+    color: white;
+    border-color: rgb(226, 158, 81);
+    box-shadow: 0 0 3px 2px gold;
+    transform: scale(1.1);
+}
+
+.nav-links a.active {
+    color: white;
+    border-color: rgb(226, 158, 81);
+    box-shadow: 0 0 3px 2px gold;
+    transform: scale(1.1);
 }
