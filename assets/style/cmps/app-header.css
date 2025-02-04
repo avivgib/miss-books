@@ -20,7 +20,6 @@
 .nav-links {
     display: flex;
     gap: 22px;
-    margin-inline-end: 20px;
 }
 
 .nav-links button {

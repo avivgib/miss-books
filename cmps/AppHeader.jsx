@@ -1,3 +1,5 @@
+import { utilService } from "../services/util.service.js"
+
 const { useState, useEffect } = React
 
 export function AppHeader({ onSetPage, activePage, pages }) {
@@ -9,9 +11,22 @@ export function AppHeader({ onSetPage, activePage, pages }) {
 
     function handlePageChange(page) {
         onSetPage(page)
-        setIsMenuOpen(false)
+        // setIsMenuOpen(false) // Allow to remove the navigator after selecting a new page
     }
 
+    // Handle animation open/close navigation
+    useEffect(() => {
+        const elNav = document.querySelector('.nav-links') //useRef
+        if (elNav) {
+            if (isMenuOpen) {
+                utilService.animateCSS(elNav, 'fadeInTopRight')
+            } else {
+                utilService.animateCSS(elNav, 'fadeOutTopRight')
+            }
+        }
+    }, [isMenuOpen])
+
+    // Handle open/close navigation on small screen
     useEffect(() => {
         if (!isMenuOpen) return
 
@@ -31,15 +46,11 @@ export function AppHeader({ onSetPage, activePage, pages }) {
         <header className="app-header main-layout">
             <h1 className="logo">Miss Books</h1>
 
-            <button className="menu-toggle" onClick={(e) => {
-                // Prevent the click event from propagating to parent elements
-                e.stopPropagation()
-                toggleMenu()
-            }}>
+            <button className="menu-toggle" onClick={() => toggleMenu()}>
                 ☰
             </button>
 
-            <nav className={`nav-links ${isMenuOpen ? 'open' : ''}`}>
+            <nav className={`nav-links ${isMenuOpen ? 'open' : ''}`} >
                 {Object.keys(pages).map((pageName) => (
                     <a key={pageName}
                         className={activePage === pageName ? 'active' : ''}

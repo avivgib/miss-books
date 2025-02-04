@@ -13,5 +13,5 @@ export function About() {
                 features and book recommendations!
             </p>
         </section>
-    );
+    )
 }
