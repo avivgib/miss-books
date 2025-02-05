@@ -1,9 +1,11 @@
 import { utilService } from "../services/util.service.js"
 
-const { useState, useEffect } = React
+const { useState, useEffect, useRef } = React
 
 export function AppHeader({ onSetPage, activePage, pages }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
+    const [isAnimating, setIsAnimating] = useState(false)
+    const elNav = useRef(null)
 
     function toggleMenu() {
         setIsMenuOpen(!isMenuOpen)
@@ -16,12 +18,18 @@ export function AppHeader({ onSetPage, activePage, pages }) {
 
     // Handle animation open/close navigation
     useEffect(() => {
-        const elNav = document.querySelector('.nav-links') //useRef
-        if (elNav) {
+        if (!elNav.current) return
+
+        if (window.innerWidth <= 768) {
             if (isMenuOpen) {
-                utilService.animateCSS(elNav, 'fadeInTopRight')
+                setIsAnimating(true)
+                utilService.animateCSS(elNav.current, 'fadeInTopRight').then(() => {
+                    setIsAnimating(false)
+                })
             } else {
-                utilService.animateCSS(elNav, 'fadeOutTopRight')
+                utilService.animateCSS(elNav.current, 'fadeOutTopRight').then(() => {
+                    setIsAnimating(false)
+                })
             }
         }
     }, [isMenuOpen])
@@ -38,7 +46,6 @@ export function AppHeader({ onSetPage, activePage, pages }) {
         }
 
         document.addEventListener('click', handleClickOutside)
-
         return () => document.removeEventListener('click', handleClickOutside)
     }, [isMenuOpen])
 
@@ -50,7 +57,7 @@ export function AppHeader({ onSetPage, activePage, pages }) {
                 ☰
             </button>
 
-            <nav className={`nav-links ${isMenuOpen ? 'open' : ''}`} >
+            <nav ref={elNav} className={`nav-links ${isMenuOpen ? 'open' : ''}`} >
                 {Object.keys(pages).map((pageName) => (
                     <a key={pageName}
                         className={activePage === pageName ? 'active' : ''}
