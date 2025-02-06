@@ -1,4 +1,4 @@
-export function About() {
+export function AboutUs() {
     return (
         <section className="about main-layout">
             <h2>About Miss Books</h2>
