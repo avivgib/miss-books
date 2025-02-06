@@ -13,7 +13,6 @@ export function AppHeader({ onSetPage, activePage, pages }) {
 
     function handlePageChange(page) {
         onSetPage(page)
-        // setIsMenuOpen(false) // Allow to remove the navigator after selecting a new page
     }
 
     // Handle animation open/close navigation
@@ -26,11 +25,7 @@ export function AppHeader({ onSetPage, activePage, pages }) {
                 utilService.animateCSS(elNav.current, 'fadeInTopRight').then(() => {
                     setIsAnimating(false)
                 })
-            } else {
-                utilService.animateCSS(elNav.current, 'fadeOutTopRight').then(() => {
-                    setIsAnimating(false)
-                })
-            }
+            } 
         }
     }, [isMenuOpen])
 
@@ -41,7 +36,10 @@ export function AppHeader({ onSetPage, activePage, pages }) {
         function handleClickOutside({ target }) {
             // Check if the click was outside the open navigation and menu-toggle button
             if (!target.closest('.nav-links') && !target.closest('.menu-toggle')) {
-                setIsMenuOpen(false)
+                utilService.animateCSS(elNav.current, 'fadeOutTopRight').then(() => {
+                    setIsMenuOpen(false)
+                    setIsAnimating(false)
+                })
             }
         }
 
