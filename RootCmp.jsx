@@ -13,16 +13,16 @@ export function App() {
     }
 
     const pages = {
-        Home: <Home />,
-        About: <About />,
-        Book: <BookIndex />
+        Home: <Home onSetPage={onSetPage}/>,
+        Books: <BookIndex />,
+        About: <About />
     }
 
     return (
         <section className="app">
             <AppHeader onSetPage={onSetPage} activePage={page} pages={pages} />
 
-            <main className="main-layout">
+            <main className={"main-layout"}>
                 {pages[page]}
             </main>
         </section>
