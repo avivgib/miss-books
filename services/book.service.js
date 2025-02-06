@@ -6,6 +6,8 @@ const BOOK_KEY = 'bookDB'
 
 export const bookService = {
     query,
+    get,
+    remove,
     save,
     getEmptyBook,
     getDefaultFilter,
@@ -32,6 +34,14 @@ function _filterBooks(books, filterBy) {
         books = books.filter(book => book.pageCount >= filterBy.pageCount)
     }
     return books
+}
+
+function get(bookId) {
+    return storageService.get(BOOK_KEY, bookId)
+}
+
+function remove(bookId) {
+    return storageService.remove(BOOK_KEY, bookId)
 }
 
 function save(book) {

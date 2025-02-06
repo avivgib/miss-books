@@ -1,3 +1,4 @@
+import { BookList } from "../cmps/BookList.jsx"
 import { bookService } from "../services/book.service.js"
 
 const { useState, useEffect } = React
@@ -13,32 +14,25 @@ export function BookIndex() {
 
     function loadBooks() {
         bookService.query()
-            .then(books =>{
+            .then(books => {
                 console.log('books:', books)
                 setBooks(books)
             })
     }
 
+    function onRemoveBook(bookId) {
+        bookService.remove(bookId)
+            .then(() => {
+                console.log('Remove')
+                setBooks(prevBooks => prevBooks.filter(book => book.id !== bookId))
+            })
+    }
+
     return (
         <section className="books-container">
-            <h1>Book List</h1>
+            <h1>Book List:</h1>
 
-            <section className="books-list">
-            {books.map(book =>
-                    <article key={book.id}>
-                        {/* <bookPreview book={book} /> */}
-                        <section className="preview-book">
-                            <h3>{book.title}</h3>
-                            <img src={book.thumbnail} alt={book.title}/>
-                            <p>{book.publishedDate}</p>
-<hr/>
-                            <button onClick={() => onRemoveBook(book.id)}>Delete</button>
-                            <button onClick={() => onSetSelectedBookId(book.id)}>Details</button>
-                        </section>
-                        <hr/><hr/>
-                    </article>
-                )}
-            </section>
+            <BookList books={books} onRemoveBook={onRemoveBook} />
 
         </section>
     )
