@@ -27,7 +27,7 @@ export function BookIndex() {
             {books.map(book =>
                     <article key={book.id}>
                         {/* <bookPreview book={book} /> */}
-                        <section>
+                        <section className="preview-book">
                             <h3>{book.title}</h3>
                             <img src={book.thumbnail} alt={book.title}/>
                             <p>{book.publishedDate}</p>

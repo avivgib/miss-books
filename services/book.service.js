@@ -12,7 +12,7 @@ export const bookService = {
 }
 
 function query(filterBy = {}) {
-    let books = utilService.loadFromStorage(BOOK_KEY)
+    let books = storageService.query(BOOK_KEY)
 
     if (!Array.isArray(books) || !books.length) {
         console.log('Loading books from file...')
@@ -20,10 +20,10 @@ function query(filterBy = {}) {
         utilService.saveToStorage(BOOK_KEY, books)
     }
 
-    return Promise.resolve(filterBooks(books, filterBy))
+    return Promise.resolve(_filterBooks(books, filterBy))
 }
 
-function filterBooks(books, filterBy) {
+function _filterBooks(books, filterBy) {
     if (filterBy.title) {
         const regExp = new RegExp(filterBy.title, 'i')
         books = books.filter(book => regExp.test(book.title))
@@ -49,12 +49,3 @@ function getEmptyBook(title = '', pageCount = 0) {
 function getDefaultFilter() {
     return { title: '', pageCount: 0 }
 }
-
-// function _createBooks() {
-//     let books = loadFromStorage(BOOK_KEY)
-//     if (!books || !books.length) {
-//         console.log(books)
-//         console.log(booksDB)
-//         saveToStorage(BOOK_KEY, booksDB)
-//     }
-// }

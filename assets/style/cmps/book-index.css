@@ -36,6 +36,7 @@
 }
 
 .books-list h3 {
+    text-align: center;
     font-size: 1.2em;
     margin-bottom: 5px;
 }
@@ -45,17 +46,22 @@
     color: #555;
 }
 
+.preview-book {
+    justify-items: center;
+}
+
 button {
     margin: 5px;
     padding: 8px 12px;
     border: none;
-    background-color: #007BFF;
+    background-color: var(--clr3);
     color: white;
     border-radius: 5px;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: background 0.3s transform 0.3s;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: var(--gray2);
+    transform: scale(1.1) translateY(-7px);
 }
