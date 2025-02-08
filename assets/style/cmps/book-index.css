@@ -46,7 +46,7 @@
     color: #555;
 }
 
-.preview-book {
+.book-preview {
     justify-items: center;
 }
 
@@ -63,5 +63,5 @@ button {
 
 button:hover {
     background-color: var(--gray2);
-    transform: scale(1.1) translateY(-7px);
+    transform: scale(1.1);
 }
