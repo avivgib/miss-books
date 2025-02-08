@@ -14,15 +14,15 @@ export const bookService = {
 }
 
 function query(filterBy = {}) {
-    let books = storageService.query(BOOK_KEY)
-
-    if (!Array.isArray(books) || !books.length) {
-        console.log('Loading books from file...')
-        books = [...defaultBooks]
-        utilService.saveToStorage(BOOK_KEY, books)
-    }
-
-    return Promise.resolve(_filterBooks(books, filterBy))
+    return storageService.query(BOOK_KEY)
+        .then(books => {
+            if (!Array.isArray(books) || !books.length) {
+                console.log('Loading books from file...')
+                books = [...defaultBooks]
+                utilService.saveToStorage(BOOK_KEY, books)
+            }
+            return _filterBooks(books, filterBy)
+        })
 }
 
 function _filterBooks(books, filterBy) {
@@ -30,8 +30,8 @@ function _filterBooks(books, filterBy) {
         const regExp = new RegExp(filterBy.title, 'i')
         books = books.filter(book => regExp.test(book.title))
     }
-    if (filterBy.pageCount) {
-        books = books.filter(book => book.pageCount >= filterBy.pageCount)
+    if (filterBy.amount) {
+        books = books.filter(book => book.listPrice.amount >= filterBy.amount)
     }
     return books
 }
@@ -52,10 +52,14 @@ function save(book) {
     }
 }
 
-function getEmptyBook(title = '', pageCount = 0) {
-    return { title, pageCount }
+function getEmptyBook(title = '', amount = '') {
+    return { title, amount }
 }
 
 function getDefaultFilter() {
-    return { title: '', pageCount: 0 }
+    return { title: '', amount: '' }
+}
+
+function getEmptyBook(title = '', amount = 0) {
+    return { title, amount }
 }
