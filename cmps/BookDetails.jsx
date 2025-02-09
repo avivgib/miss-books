@@ -11,6 +11,13 @@ export function BookDetails({ onSetSelectedBookId, selectedBookId }) {
         if (pageCount < 100) return 'Light Reading'
         return 'Standard Reading'
     }
+    const getBookLifeStatus = (publishedDate) => {
+        const currentYear = new Date().getFullYear()
+        const publicationYear = new Date(publishedDate).getFullYear()
+        const yearsOnAir = currentYear - publicationYear
+        
+         return yearsOnAir > 10 ? 'Vintage' : 'New'
+    }
 
     useEffect(() => {
         loadBook()
@@ -35,7 +42,7 @@ export function BookDetails({ onSetSelectedBookId, selectedBookId }) {
                     <h3 className="book-subtitle">{book.subtitle}</h3>
 
                     <p><strong>Authors:</strong> {book.authors.join(", ") || "Unknown"}</p>
-                    <p><strong>Published:</strong> {book.publishedDate}</p>
+                    <p><strong>Published:</strong> {book.publishedDate} - {getBookLifeStatus(book.publishedDate)}</p>
                     <p><strong>Page Count:</strong> {book.pageCount} - {getReadingCategory(book.pageCount)}</p> 
                     <p><strong>Categories:</strong> {book.categories.join(", ") || "None"}</p>
                     <p><strong>Language:</strong> {book.language.toUpperCase()}</p>
