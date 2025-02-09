@@ -49,7 +49,6 @@ export function BookIndex() {
                 ? <BookDetails onSetSelectedBookId={onSetSelectedBookId} selectedBookId={selectedBookId} />
 
                 : <React.Fragment>
-                    <h1>Book List:</h1>
                     <BookFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
                     <BookList books={books} onRemoveBook={onRemoveBook} onSetSelectedBookId={onSetSelectedBookId} />
                 </React.Fragment>
