@@ -64,3 +64,15 @@
     margin-top: 10px;
     line-height: 1.5;
 }
+
+.price {
+    font-weight: bold;
+}
+
+.cheap-price {
+    color: rgb(0, 83, 0);
+}
+
+.expensive-price {
+    color: rgb(128, 3, 3);
+}
