@@ -14,6 +14,7 @@
 @import 'cmps/book-index.css';
 @import 'cmps/home.css';
 @import 'cmps/book-filter.css';
+@import 'cmps/book-details.css';
 
 /* MQ */
 @import 'setup/mq.css';

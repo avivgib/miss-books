@@ -37,6 +37,7 @@
 }
 
 .filter-btn {
+    /* display: none; */
     background-color: var(--clr1);
     color: white;
     padding: 0.6rem;

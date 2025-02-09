@@ -1,6 +1,6 @@
 import { BookPreview } from "./BookPreview.jsx"
 
-export function BookList({ books, onRemoveBook }) {
+export function BookList({ books, onRemoveBook, onSetSelectedBookId }) {
 
     return (
         <section className="books-list">

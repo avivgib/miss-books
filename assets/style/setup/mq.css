@@ -1,4 +1,5 @@
 @media (max-width: 768px) {
+    /* Navigation */
     .nav-links {
         display: none;
         flex-direction: column;
@@ -27,5 +28,20 @@
 
     .menu-toggle {
         display: flex;
+    }
+
+    /* Book Details */
+    .book-card {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .book-img {
+        width: 80%;
+        max-width: 300px;
+    }
+
+    .book-info {
+        text-align: center;
     }
 }
