@@ -1,4 +1,5 @@
 import { bookService } from "../services/book.service.js"
+import { LongTxt } from "../cmps/LongTxt.jsx"
 
 const { useState, useEffect } = React
 
@@ -49,11 +50,25 @@ export function BookDetails({ onSetSelectedBookId, selectedBookId }) {
                     <h1 className="book-title">{book.title}</h1>
                     <h3 className="book-subtitle">{book.subtitle}</h3>
 
-                    <p><strong>Authors:</strong> {book.authors.join(", ") || "Unknown"}</p>
-                    <p><strong>Published:</strong> {book.publishedDate} - {getBookLifeStatus(book.publishedDate)}</p>
-                    <p><strong>Page Count:</strong> {book.pageCount} - {getReadingCategory(book.pageCount)}</p>
-                    <p><strong>Categories:</strong> {book.categories.join(", ") || "None"}</p>
-                    <p><strong>Language:</strong> {book.language.toUpperCase()}</p>
+                    <p><strong>Authors:</strong>
+                        {book.authors.join(", ") || "Unknown"}
+                    </p>
+
+                    <p><strong>Published:</strong>
+                        {book.publishedDate} - {getBookLifeStatus(book.publishedDate)}
+                    </p>
+
+                    <p><strong>Page Count:</strong>
+                        {book.pageCount} - {getReadingCategory(book.pageCount)}
+                    </p>
+
+                    <p><strong>Categories:</strong>
+                        {book.categories.join(", ") || "None"}
+                    </p>
+
+                    <p><strong>Language:</strong>
+                        {book.language.toUpperCase()}
+                    </p>
 
                     <p><strong>Price:</strong>
                         <span className={`price ${getBookPriceStatus(book.listPrice.amount)}`}>
@@ -63,7 +78,9 @@ export function BookDetails({ onSetSelectedBookId, selectedBookId }) {
 
                     {book.listPrice.isOnSale && <p className="sale-price">🔥 On Sale!</p>}
 
-                    <p className="book-description"><strong>Description:</strong> {book.description}</p>
+                    <p className="book-description"><strong>Description:</strong>
+                        <LongTxt text={book.description} />
+                    </p>
                 </div>
             </div>
         </section>
