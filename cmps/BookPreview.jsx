@@ -3,7 +3,6 @@ export function BookPreview({ book }) {
         <section className="book-preview">
             <h3>{book.title}</h3>
             <img src={book.thumbnail} alt={book.title} />
-            <p>{book.publishedDate}</p>
             <p>
                 {book.listPrice.amount.toLocaleString(undefined, { style: 'currency', currency: book.listPrice.currencyCode })}
             </p>
