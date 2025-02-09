@@ -6,14 +6,15 @@ export const books = [
         "title": "Gwent",
         "subtitle": "mi est eros convallis auctor arcu dapibus himenaeos",
         "authors": [
-            "Barbara Cartland"
+            "Barbara Cartland",
+            "Des Sheridan"
         ],
         "publishedDate": 1999,
         "description": "placerat nisi sodales suscipit tellus tincidunt mauris elit sit luctus interdum ad dictum platea vehicula conubia fermentum habitasse congue suspendisse",
         "pageCount": 713,
         "categories": [
-            "Computers",
-            "Hack"
+            "Fiction", 
+            "Adventure"
         ],
         "thumbnail": "./assets/img/1.jpg",
         "language": "en",
@@ -33,9 +34,9 @@ export const books = [
         "publishedDate": 1978,
         "description": "aliquam pretium lorem laoreet etiam odio cubilia iaculis placerat aliquam tempor nisl auctor",
         "pageCount": 129,
-        "categories": [
-            "Computers",
-            "Hack"
+         "categories": [
+            "Adventure",
+            "History"
         ],
         "thumbnail": "./assets/img/2.jpg",
         "language": "sp",
@@ -78,8 +79,8 @@ export const books = [
         "description": "interdum inceptos mauris habitant primis neque tempus lacus morbi auctor cras consectetur euismod vehicula neque netus enim vivamus augue molestie imperdiet tincidunt aliquam",
         "pageCount": 303,
         "categories": [
-            "Computers",
-            "Hack"
+            "Biography", 
+            "Self-Help"
         ],
         "thumbnail": "./assets/img/4.jpg",
         "language": "en",
@@ -100,8 +101,8 @@ export const books = [
         "description": "et vehicula faucibus amet accumsan lectus cras nulla cubilia arcu neque litora mi habitasse quis amet augue facilisis sed",
         "pageCount": 337,
         "categories": [
-            "Computers",
-            "Hack"
+            "Technology", 
+            "Art"
         ],
         "thumbnail": "./assets/img/5.jpg",
         "language": "sp",
@@ -122,8 +123,7 @@ export const books = [
         "description": "senectus habitant nam imperdiet nostra elit dapibus nisl adipiscing in",
         "pageCount": 748,
         "categories": [
-            "Computers",
-            "Hack"
+            "Fiction"  
         ],
         "thumbnail": "./assets/img/6.jpg",
         "language": "en",
@@ -166,8 +166,8 @@ export const books = [
         "description": "magna quisque venenatis laoreet purus in semper habitant proin pellentesque sed egestas cursus faucibus nam enim id sit mi ligula risus curabitur senectus curabitur sodales fames sem",
         "pageCount": 299,
         "categories": [
-            "Computers",
-            "Hack"
+            "Biography",
+            "Health"
         ],
         "thumbnail": "./assets/img/8.jpg",
         "language": "he",
@@ -188,8 +188,7 @@ export const books = [
         "description": "porttitor nisl sodales id eu tellus venenatis laoreet auctor dictumst nulla",
         "pageCount": 803,
         "categories": [
-            "Computers",
-            "Hack"
+            "Fiction"
         ],
         "thumbnail": "./assets/img/9.jpg",
         "language": "sp",
@@ -210,8 +209,8 @@ export const books = [
         "description": "curabitur bibendum in dolor neque magna phasellus arcu nulla cubilia senectus maecenas ullamcorper neque accumsan facilisis dictumst ornare",
         "pageCount": 891,
         "categories": [
-            "Computers",
-            "Hack"
+            "History",
+            "Biography"
         ],
         "thumbnail": "./assets/img/10.jpg",
         "language": "en",
@@ -232,8 +231,8 @@ export const books = [
         "description": "auctor amet nostra luctus molestie proin platea cubilia netus sed purus egestas a primis eu tristique interdum litora lorem venenatis mattis senectus",
         "pageCount": 86,
         "categories": [
-            "Computers",
-            "Hack"
+            "Self-Help",
+            "Art"
         ],
         "thumbnail": "./assets/img/11.jpg",
         "language": "sp",
@@ -254,8 +253,8 @@ export const books = [
         "description": "aenean mauris porta netus accumsan turpis etiam vestibulum vivamus sagittis nullam nec tellus quam mattis est pellentesque nisi litora sit ad",
         "pageCount": 882,
         "categories": [
-            "Computers",
-            "Hack"
+            "Biography",
+            "Science"
         ],
         "thumbnail": "./assets/img/12.jpg",
         "language": "sp",
@@ -276,8 +275,8 @@ export const books = [
         "description": "nec faucibus arcu suspendisse tempus potenti lobortis aliquam quisque augue integer consectetur etiam ultrices curabitur tristique metus",
         "pageCount": 598,
         "categories": [
-            "Computers",
-            "Hack"
+            "Art",
+            "Biography"
         ],
         "thumbnail": "./assets/img/13.jpg",
         "language": "en",
@@ -298,8 +297,8 @@ export const books = [
         "description": "etiam nec aliquam euismod platea vel laoreet quisque condimentum sapien neque ut aliquam torquent in nam",
         "pageCount": 608,
         "categories": [
-            "Computers",
-            "Hack"
+            "Science",
+            "Fiction"
         ],
         "thumbnail": "./assets/img/14.jpg",
         "language": "he",
@@ -320,8 +319,9 @@ export const books = [
         "description": "etiam pretium urna fusce lobortis curae viverra aptent metus semper nisi litora feugiat elementum purus nunc consequat lorem ultricies non primis phasellus sociosqu donec dolor",
         "pageCount": 583,
         "categories": [
-            "Computers",
-            "Hack"
+            "Health",
+            "Art",
+            "Self-Help"
         ],
         "thumbnail": "./assets/img/15.jpg",
         "language": "en",
@@ -342,8 +342,8 @@ export const books = [
         "description": "dolor morbi malesuada eleifend purus taciti sit interdum aliquet commodo ut libero tincidunt",
         "pageCount": 497,
         "categories": [
-            "Computers",
-            "Hack"
+            "Biography",
+            "Self-Help"
         ],
         "thumbnail": "./assets/img/16.jpg",
         "language": "en",
@@ -364,8 +364,8 @@ export const books = [
         "description": "rhoncus odio netus consectetur aenean hendrerit massa scelerisque elementum aptent lobortis pharetra maecenas quam nulla volutpat turpis non habitasse aenean ante sodales lobortis quisque libero imperdiet gravida eleifend nulla",
         "pageCount": 804,
         "categories": [
-            "Computers",
-            "Hack"
+            "Self-Help",
+            "Health"
         ],
         "thumbnail": "./assets/img/17.jpg",
         "language": "en",
@@ -386,8 +386,8 @@ export const books = [
         "description": "himenaeos quis iaculis orci libero egestas quam varius primis erat lacus facilisis blandit dictum tristique interdum litora quisque purus senectus pretium purus",
         "pageCount": 231,
         "categories": [
-            "Computers",
-            "Hack"
+            "Self-Help",
+            "Health"
         ],
         "thumbnail": "./assets/img/18.jpg",
         "language": "he",
@@ -408,8 +408,8 @@ export const books = [
         "description": "torquent in et id lacus vivamus aptent cursus erat integer venenatis risus ac ante quam etiam euismod feugiat risus suscipit rhoncus pharetra quisque felis",
         "pageCount": 652,
         "categories": [
-            "Computers",
-            "Hack"
+            "Fiction",
+            "Adventure"
         ],
         "thumbnail": "./assets/img/19.jpg",
         "language": "he",
@@ -430,8 +430,9 @@ export const books = [
         "description": "aliquet euismod mi vivamus bibendum donec etiam quisque iaculis ullamcorper est sed",
         "pageCount": 904,
         "categories": [
-            "Computers",
-            "Hack"
+            "Adventure",
+            "Hack",
+            "History"
         ],
         "thumbnail": "./assets/img/20.jpg",
         "language": "sp",
