@@ -39,48 +39,78 @@ export function BookDetails({ onSetSelectedBookId, selectedBookId }) {
 
     if (!book) return 'Loading...'
 
+    function getBookLng(lng) {
+        switch (lng) {
+            case 'he':
+                return 'Hebrew'
+            case 'sp':
+                return 'Spanish'
+            default:
+                return 'English'
+        }
+    }
+
+    const {
+        title,
+        subtitle,
+        thumbnail,
+        pageCount,
+        publishedDate,
+        authors,
+        description,
+        language,
+        categories,
+        listPrice
+    } = book
+
     return (
         <section className="book-details">
-            <button className="back-btn" onClick={() => onSetSelectedBookId(null)}>⬅ Back</button>
+            <button className="back-btn" onClick={() => onSetSelectedBookId(null)}>
+                <i className="fas fa-arrow-left"></i> Back
+            </button>
 
             <div className="book-card">
-                <img src={book.thumbnail} alt={book.title} className="book-img" />
+                <div className="image-container">
+                    <img src={thumbnail} alt={title} className="book-img" />
+                    {listPrice.isOnSale && <div className="sale-badge">🔥 On Sale!</div>}
+                </div>
 
                 <div className="book-info">
-                    <h1 className="book-title">{book.title}</h1>
-                    <h3 className="book-subtitle">{book.subtitle}</h3>
+                    <h1 className="book-title">{title}</h1>
+                    <h3 className="book-subtitle">{subtitle}</h3>
 
-                    <p><strong>Authors:</strong>
-                        {book.authors.join(", ") || "Unknown"}
-                    </p>
+                    <div><strong>Authors: </strong>
+                        {authors.join(", ") || "Unknown"}
+                    </div>
 
-                    <p><strong>Published:</strong>
-                        {book.publishedDate} - {getBookLifeStatus(book.publishedDate)}
-                    </p>
+                    <div><strong>Published: </strong>
+                        {publishedDate} - {getBookLifeStatus(publishedDate)}
+                    </div>
 
-                    <p><strong>Page Count:</strong>
-                        {book.pageCount} - {getReadingCategory(book.pageCount)}
-                    </p>
+                    <div><strong>Page Count: </strong>
+                        {pageCount} - {getReadingCategory(pageCount)}
+                    </div>
 
-                    <p><strong>Categories:</strong>
-                        {book.categories.join(", ") || "None"}
-                    </p>
+                    <div><strong>Categories: </strong>
+                        {categories.join(", ") || "None"}
+                    </div>
 
-                    <p><strong>Language:</strong>
-                        {book.language.toUpperCase()}
-                    </p>
+                    <div><strong>Language: </strong>
+                        {getBookLng(language.toLowerCase())}
+                    </div>
 
-                    <p><strong>Price:</strong>
-                        <span className={`price ${getBookPriceStatus(book.listPrice.amount)}`}>
-                            {book.listPrice.amount.toLocaleString(undefined, { style: 'currency', currency: book.listPrice.currencyCode })}
+                    <div><strong>Price: </strong>
+                        <span className={`price ${getBookPriceStatus(listPrice.amount)}`}>
+                            {listPrice.amount.toLocaleString(undefined, { style: 'currency', currency: listPrice.currencyCode })}
                         </span>
-                    </p>
+                    </div>
 
-                    {book.listPrice.isOnSale && <p className="sale-price">🔥 On Sale!</p>}
+                    {listPrice.isOnSale && <p className="sale-price">🔥 On Sale!</p>}
 
-                    <p className="book-description"><strong>Description:</strong>
-                        <LongTxt text={book.description} />
-                    </p>
+                    <div className="book-description">
+                        <span><strong>Description: </strong></span>
+                        <LongTxt text={description} />
+                    </div>
                 </div>
             </div>
         </section>

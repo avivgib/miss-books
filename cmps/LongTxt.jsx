@@ -11,13 +11,13 @@ export function LongTxt({ text, length = 100 }) {
     const textToShow = isShowLongText ? text : (text.substring(0, length))
 
     return (
-        <p>
+        <span>
             {textToShow}
             {isLongText &&
                 <button onClick={onToggleIsShowLongText}>
                     {isShowLongText ? 'Show Less...' : 'Show More...'}
                 </button>
             }
-        </p>
+        </span>
     )
 }
