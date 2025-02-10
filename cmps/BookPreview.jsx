@@ -11,9 +11,6 @@ export function BookPreview({ book }) {
                 </span>
             </div>
 
-            <div className="book-authors"><strong>Authors: </strong>
-                {book.authors.join(", ") || "Unknown"}
-            </div>
         </section>
     )
 }

@@ -9,7 +9,6 @@ export function BookList({ books, onRemoveBook, onSetSelectedBookId }) {
                     <BookPreview book={book} />
 
                     <section>
-                        <hr />
                         <button onClick={() => onRemoveBook(book.id)}>Delete</button>
                         <button onClick={() => onSetSelectedBookId(book.id)}>Details</button>
                     </section>

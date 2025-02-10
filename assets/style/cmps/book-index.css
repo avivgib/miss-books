@@ -28,6 +28,11 @@
     transform: scale(1.05);
 }
 
+.book-list article section {
+    box-shadow: inset 0 1px 0 #ccc;
+    padding-top: 10px;
+}
+
 .book-list img {
     width: 100px;
     height: auto;
@@ -48,11 +53,6 @@
 
 .book-preview {
     justify-items: center;
-}
-
-.book-authors {
-    display: flex;
-    gap: 5px;
 }
 
 button {
