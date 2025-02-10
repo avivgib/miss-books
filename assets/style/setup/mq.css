@@ -45,6 +45,14 @@
         max-width: 300px;
     }
 
+    .sale-badge {
+        top: max(-5px, 2vw);
+        left: 18%;
+        transform: translateX(-50%) rotate(-37deg);
+        font-size: 2vw;
+        padding: 1vh 2vw;
+    }
+    
     .book-info {
         text-align: center;
     }

@@ -3,7 +3,7 @@ import { BookPreview } from "./BookPreview.jsx"
 export function BookList({ books, onRemoveBook, onSetSelectedBookId }) {
 
     return (
-        <section className="books-list">
+        <section className="book-list">
             {books.map(book =>
                 <article key={book.id}>
                     <BookPreview book={book} />

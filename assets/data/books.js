@@ -6,7 +6,6 @@ export const books = [
         "title": "Gwent",
         "subtitle": "mi est eros convallis auctor arcu dapibus himenaeos",
         "authors": [
-            "Barbara Cartland",
             "Des Sheridan"
         ],
         "publishedDate": 1999,

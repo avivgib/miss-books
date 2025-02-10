@@ -3,16 +3,16 @@
     padding: 20px;
 }
 
-.books-list {
+.book-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
     justify-content: center;
     max-height: 80vh;
     padding: 10px;
 }
 
-.books-list article {
+.book-list article {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -24,30 +24,35 @@
     transition: transform 0.2s;
 }
 
-.books-list article:hover {
+.book-list article:hover {
     transform: scale(1.05);
 }
 
-.books-list img {
+.book-list img {
     width: 100px;
     height: auto;
     border-radius: 5px;
     margin-bottom: 10px;
 }
 
-.books-list h3 {
+.book-list h3 {
     text-align: center;
     font-size: 1.2em;
     margin-bottom: 5px;
 }
 
-.books-list p {
+.book-list p {
     font-size: 0.9em;
     color: #555;
 }
 
 .book-preview {
     justify-items: center;
+}
+
+.book-authors {
+    display: flex;
+    gap: 5px;
 }
 
 button {
@@ -58,7 +63,7 @@ button {
     color: white;
     border-radius: 5px;
     cursor: pointer;
-    transition: background 0.3s transform 0.3s;
+    transition: background-color 0.3s transform 0.3s;
 }
 
 button:hover {
