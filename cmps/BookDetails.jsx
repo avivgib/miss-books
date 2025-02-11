@@ -69,7 +69,7 @@ export function BookDetails({ onSetSelectedBookId, selectedBookId }) {
                 <i className="fas fa-arrow-left"></i> Back
             </button>
 
-            <div className="book-card">
+            <div className="details-card">
                 <div className="image-container">
                     <img src={thumbnail} alt={title} className="book-img" />
                     {listPrice.isOnSale && <div className="sale-badge">🔥 On Sale!</div>}

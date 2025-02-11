@@ -22,7 +22,8 @@ export function AppHeader({ onSetPage, activePage, pages }) {
         if (window.innerWidth <= 768) {
             if (isMenuOpen) {
                 setIsAnimating(true)
-                utilService.animateCSS(elNav.current, 'fadeInTopRight').then(() => {
+                utilService.animateCSS(elNav.current, 'fadeInTopRight')
+                .then(() => {
                     setIsAnimating(false)
                 })
             } 

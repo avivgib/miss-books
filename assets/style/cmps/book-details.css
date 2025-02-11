@@ -23,7 +23,7 @@
     background: #333;
 }
 
-.book-card {
+.details-card {
     display: flex;
     gap: 20px;
     align-items: flex-start;
