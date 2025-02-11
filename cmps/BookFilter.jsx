@@ -11,10 +11,21 @@ export function BookFilter({ filterBy, onSetFilterBy }) {
         onSetFilterBy(editFilterBy)
     }, [editFilterBy])
 
-    function onHandleChange(ev) {
-        let { value, type, name: field } = ev.target
+    function onHandleChange({ target }) {
+        const field = target.name
+        let value = target.value
 
-        if (type === 'number') value = +value
+        switch(target.type) {
+            case 'number':
+            case 'range':
+                value = +value
+                break;
+            
+            case 'checkbox':
+                value = target.checked
+                break;
+        }
+
         setEditFilterBy(prevFilterBy => ({ ...prevFilterBy, [field]: value }))
     }
 
