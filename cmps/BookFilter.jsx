@@ -5,7 +5,7 @@ const { useState, useEffect } = React
 export function BookFilter({ filterBy, onSetFilterBy }) {
 
     const [editFilterBy, setEditFilterBy] = useState({ ...filterBy })
-    console.log("editFilterBy", editFilterBy)
+    // console.log("editFilterBy", editFilterBy)
 
     useEffect(() => {
         onSetFilterBy(editFilterBy)

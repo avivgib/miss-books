@@ -1,11 +1,15 @@
 import { bookService } from "../services/book.service.js"
 import { LongTxt } from "../cmps/LongTxt.jsx"
+const { useParams } = ReactRouterDOM
+const { Link, useNavigate } = ReactRouterDOM
 
 const { useState, useEffect } = React
 
-export function BookDetails({ onSetSelectedBookId, selectedBookId }) {
+export function BookDetails() {
 
     const [book, setBook] = useState(null)
+    const params = useParams()
+    console.log("params:", params)
 
     const getReadingCategory = (pageCount) => {
         if (pageCount > 500) return 'Serious Reading'
@@ -30,10 +34,10 @@ export function BookDetails({ onSetSelectedBookId, selectedBookId }) {
 
     useEffect(() => {
         loadBook()
-    }, [])
+    }, [params.bookId])
 
     function loadBook() {
-        bookService.get(selectedBookId)
+        bookService.get(params.bookId)
             .then(book => setBook(book))
     }
 
@@ -65,8 +69,12 @@ export function BookDetails({ onSetSelectedBookId, selectedBookId }) {
 
     return (
         <section className="book-details">
-            <button className="back-btn" onClick={() => onSetSelectedBookId(null)}>
+            {/* <button className="back-btn" onClick={onBack}>
                 <i className="fas fa-arrow-left"></i> Back
+            </button> */}
+
+            <button className="back-btn">
+            <Link to="/book"><i className="fas fa-arrow-left"></i>Back</Link>
             </button>
 
             <div className="details-card">
@@ -113,6 +121,13 @@ export function BookDetails({ onSetSelectedBookId, selectedBookId }) {
                     </div>
                 </div>
             </div>
+
+            <button>
+                <Link to={`/book/${book.prevBookId}`}><i className="fas fa-arrow-left"></i>Prev Car</Link>
+            </button>
+            <button>
+                <Link to={`/book/${book.nextBookId}`}>Next Car<i className="fas fa-arrow-right"></i></Link>
+            </button>
         </section>
     )
 }
