@@ -42,8 +42,11 @@ function save(book) {
     }
 }
 
-function getEmptyBook(title = '', amount = '') {
-    return { title, amount }
+function getEmptyBook(title = '', listPrice) {
+    return { 
+        title, 
+        listPrice: listPrice || { amount: '', currencyCode: 'ILS', isOnSale: false }
+    }
 }
 
 function getDefaultFilter() {

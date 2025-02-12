@@ -74,12 +74,12 @@ export function BookDetails() {
             </button> */}
 
             <button className="back-btn">
-            <Link to="/book"><i className="fas fa-arrow-left"></i>Back</Link>
+                <Link to="/book"><i className="fas fa-arrow-left"></i>Back</Link>
             </button>
 
             <div className="details-card">
                 <div className="image-container">
-                    <img src={thumbnail} alt={title} className="book-img" />
+                    <img src={thumbnail || "../assets/img/default.png"} alt={title} className="book-img" />
                     {listPrice.isOnSale && <div className="sale-badge">🔥 On Sale!</div>}
                 </div>
 
@@ -88,23 +88,23 @@ export function BookDetails() {
                     <h3 className="book-subtitle">{subtitle}</h3>
 
                     <div><strong>Authors: </strong>
-                        {authors.join(", ") || "Unknown"}
+                        {authors && authors.length > 0 ? authors.join(", ") : "Unknown"}
                     </div>
 
                     <div><strong>Published: </strong>
-                        {publishedDate} - {getBookLifeStatus(publishedDate)}
+                        {publishedDate ? `${publishedDate} - ${getBookLifeStatus(publishedDate)}` : 'Unknown Date'}
                     </div>
 
                     <div><strong>Page Count: </strong>
-                        {pageCount} - {getReadingCategory(pageCount)}
+                        {pageCount ? `${pageCount} - ${getReadingCategory(pageCount)}` : 'Unknown Page Count'}
                     </div>
 
                     <div><strong>Categories: </strong>
-                        {categories.join(", ") || "None"}
+                        {categories && categories.length > 0 ? categories.join(", ") : 'None'}
                     </div>
 
                     <div><strong>Language: </strong>
-                        {getBookLng(language.toLowerCase())}
+                        {language ? getBookLng(language.toLowerCase()) : 'Unknown Language'}
                     </div>
 
                     <div><strong>Price: </strong>
@@ -117,16 +117,22 @@ export function BookDetails() {
 
                     <div className="book-description">
                         <span><strong>Description: </strong></span>
-                        <LongTxt text={description} />
+                        <LongTxt text={description || 'No description available'} />
                     </div>
                 </div>
             </div>
 
             <button>
-                <Link to={`/book/${book.prevBookId}`}><i className="fas fa-arrow-left"></i>Prev Car</Link>
+                <Link to={`/book/${book.prevBookId}`}>
+                    <i className="fas fa-arrow-left"></i>
+                    Prev Book
+                </Link>
             </button>
             <button>
-                <Link to={`/book/${book.nextBookId}`}>Next Car<i className="fas fa-arrow-right"></i></Link>
+                <Link to={`/book/${book.nextBookId}`}>
+                    Next Book
+                    <i className="fas fa-arrow-right"></i>
+                </Link>
             </button>
         </section>
     )

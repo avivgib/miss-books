@@ -1,13 +1,19 @@
 export function BookPreview({ book }) {
+    const { title, thumbnail, listPrice } = book
+    console.log('book-preview', book)
+
     return (
         <section className="book-preview">
-            <h3>{book.title}</h3>
+            <h3>{title}</h3>
 
-            <img src={book.thumbnail} alt={book.title} />
+            <img
+                src={thumbnail || "../assets/img/default.png"}
+                alt={title}
+            />
 
             <div><strong>Price: </strong>
-                <span className={`price ${book.listPrice.amount}`}>
-                    {book.listPrice.amount.toLocaleString(undefined, { style: 'currency', currency: book.listPrice.currencyCode })}
+                <span className={'price'}>
+                    {listPrice.amount.toLocaleString(undefined, { style: 'currency', currency: listPrice.currencyCode })}
                 </span>
             </div>
 
