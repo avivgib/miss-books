@@ -51,7 +51,6 @@ export function BookFilter({ filterBy, onSetFilterBy }) {
                     <input name="amount" value={editFilterBy.amount || ''} onChange={onHandleChange} type="number" id="amount" placeholder="Enter amount" />
                 </div>
 
-                <button type="submit" className="filter-btn">Apply Filter</button>
             </form>
         </section>
     )
