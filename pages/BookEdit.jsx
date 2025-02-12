@@ -1,5 +1,5 @@
-const { useState } = React
-const { useNavigate } = ReactRouterDOM
+const { useState, useEffect } = React
+const { useParams, useNavigate } = ReactRouterDOM
 
 import { bookService } from "../services/book.service.js"
 
@@ -9,6 +9,18 @@ export function BookEdit() {
     const amount = listPrice && listPrice.amount || ''
 
     const navigate = useNavigate()
+    const { bookId } = useParams()
+    // console.log('bookId:', bookId)
+
+    useEffect(() => {
+        if (bookId) loadBook() 
+    }, [])
+
+    function loadBook() {
+        bookService.get(bookId)
+            .then(setBookToEdit)
+            .catch(err => console.log('err', err))
+    }
 
     function HandleEdit({ target }) {
         const field = target.name
@@ -32,13 +44,13 @@ export function BookEdit() {
                 currencyCode: (prevBookToEdit.listPrice && prevBookToEdit.listPrice.currencyCode) || 'ILS',
                 isOnSale: (prevBookToEdit.listPrice && prevBookToEdit.listPrice.isOnSale) || false
             }
-        
+
             if (field === 'amount') {
-                return {...prevBookToEdit, listPrice: updatedListPrice}
+                return { ...prevBookToEdit, listPrice: updatedListPrice }
             }
-        
-            return {...prevBookToEdit, listPrice: updatedListPrice, [field]: value}
-        })        
+
+            return { ...prevBookToEdit, listPrice: updatedListPrice, [field]: value }
+        })
     }
 
     function onSaveBook(ev) {
@@ -50,12 +62,13 @@ export function BookEdit() {
 
                 navigate('/book')
             })
+            .catch(err => console.log('err', err))
     }
 
     return (
         <section className="book-edit">
 
-            <h1> Book Edit </h1>
+            <h1> {bookId ? 'Edit Book' : 'Add New Book'} </h1>
 
             <form onSubmit={onSaveBook}>
                 <label htmlFor="title">Title:</label>
@@ -64,8 +77,8 @@ export function BookEdit() {
                     id="title"
                     type="text"
                     placeholder="Enter book title"
-                    onChange={HandleEdit} // Two Way - get data from value (by name) to state 
-                    value={title || ''} // Two Way - get data from state to value
+                    onChange={HandleEdit} // Two Way - get data from input value (by name) to state 
+                    value={title || ''} // Two Way - get data from state to input value
                 />
 
                 <label htmlFor="amount">Amount:</label>
@@ -74,8 +87,8 @@ export function BookEdit() {
                     id="amount"
                     type="number"
                     placeholder="Enter amount"
-                    onChange={HandleEdit} // Two Way - get data from value (by name) to state 
-                    value={amount || ''} // Two Way - get data from state to value
+                    onChange={HandleEdit} // Two Way - get data from input value (by name) to state 
+                    value={amount || ''} // Two Way - get data from state to input value
                 />
 
                 <button>Save</button>
