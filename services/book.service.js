@@ -53,10 +53,6 @@ function getDefaultFilter() {
     return { title: '', amount: '' }
 }
 
-function getEmptyBook(title = '', amount = 0) {
-    return { title, amount }
-}
-
 function _filterBooks(books, filterBy) {
     if (filterBy.title) {
         const regExp = new RegExp(filterBy.title, 'i')
