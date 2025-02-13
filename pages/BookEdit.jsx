@@ -13,7 +13,7 @@ export function BookEdit() {
     // console.log('bookId:', bookId)
 
     useEffect(() => {
-        if (bookId) loadBook() 
+        if (bookId) loadBook()
     }, [])
 
     function loadBook() {
@@ -61,8 +61,12 @@ export function BookEdit() {
                 console.log('savedBook', savedBook)
 
                 navigate('/book')
+                showSuccessMsg(bookId ? 'Book Edited' : 'Book Added')
             })
-            .catch(err => console.log('err', err))
+            .catch(err => {
+                console.log(bookId ? 'Problem edit book' : 'Problem add book', err)
+                showErrorMsg(bookId ? 'Problem edit book' : 'Problem add book')
+            })
     }
 
     return (

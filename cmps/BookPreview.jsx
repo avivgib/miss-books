@@ -1,6 +1,6 @@
 export function BookPreview({ book }) {
     const { title, thumbnail, listPrice } = book
-    console.log('book-preview', book)
+    // console.log('book-preview', book)
 
     return (
         <section className="book-preview">
