@@ -2,15 +2,16 @@ const { useState, useEffect } = React
 const { useParams, useNavigate } = ReactRouterDOM
 
 import { bookService } from "../services/book.service.js"
+import { BookAdd } from "../cmps/BookAdd.jsx"
 
 export function BookEdit() {
     const [bookToEdit, setBookToEdit] = useState(bookService.getEmptyBook())
     const { title, listPrice } = bookToEdit
-    const amount = listPrice && listPrice.amount || ''
+    const amount = listPrice.amount || ''
 
     const navigate = useNavigate()
     const { bookId } = useParams()
-    // console.log('bookId:', bookId)
+    const [isAddingManually, setIsAddingManually] = useState(false)
 
     useEffect(() => {
         if (bookId) loadBook()
@@ -30,26 +31,23 @@ export function BookEdit() {
             case 'number':
             case 'range':
                 value = +value
-                break;
-
+                break
             case 'checkbox':
                 value = target.checked
-                break;
+                break
         }
 
         setBookToEdit(prevBookToEdit => {
             const updatedListPrice = {
                 ...prevBookToEdit.listPrice,
-                amount: field === 'amount' ? value : (prevBookToEdit.listPrice && prevBookToEdit.listPrice.amount) || '',
-                currencyCode: (prevBookToEdit.listPrice && prevBookToEdit.listPrice.currencyCode) || 'ILS',
-                isOnSale: (prevBookToEdit.listPrice && prevBookToEdit.listPrice.isOnSale) || false
+                amount: field === 'amount' ? value : prevBookToEdit.listPrice.amount || '',
+                currencyCode: prevBookToEdit.listPrice.currencyCode || 'ILS',
+                isOnSale: prevBookToEdit.listPrice.isOnSale || false
             }
 
-            if (field === 'amount') {
-                return { ...prevBookToEdit, listPrice: updatedListPrice }
-            }
-
-            return { ...prevBookToEdit, listPrice: updatedListPrice, [field]: value }
+            return field === 'amount'
+                ? { ...prevBookToEdit, listPrice: updatedListPrice }
+                : { ...prevBookToEdit, listPrice: updatedListPrice, [field]: value }
         })
     }
 
@@ -57,47 +55,58 @@ export function BookEdit() {
         ev.preventDefault()
 
         bookService.save(bookToEdit)
-            .then(savedBook => {
-                console.log('savedBook', savedBook)
-
+            .then(() => {
                 navigate('/book')
                 showSuccessMsg(bookId ? 'Book Edited' : 'Book Added')
             })
-            .catch(err => {
-                console.log(bookId ? 'Problem edit book' : 'Problem add book', err)
-                showErrorMsg(bookId ? 'Problem edit book' : 'Problem add book')
+            .catch(() => {
+                showErrorMsg(bookId ? 'Problem editing book' : 'Problem adding book')
             })
     }
 
     return (
-        <section className="book-edit">
+        <div>
+            <section className="book-edit">
+                <h1>{bookId ? 'Edit Book' : 'Add New Book'}</h1>
 
-            <h1> {bookId ? 'Edit Book' : 'Add New Book'} </h1>
+                <form onSubmit={onSaveBook}>
+                    <label htmlFor="title">Title:</label>
+                    <input
+                        name="title"
+                        id="title"
+                        type="text"
+                        placeholder="Enter book title"
+                        onChange={HandleEdit}
+                        value={title || ''}
+                        disabled={!isAddingManually && !bookId} // מבטל את הקלט אם לא מוסיפים ידנית
+                    />
 
-            <form onSubmit={onSaveBook}>
-                <label htmlFor="title">Title:</label>
-                <input
-                    name="title"
-                    id="title"
-                    type="text"
-                    placeholder="Enter book title"
-                    onChange={HandleEdit} // Two Way - get data from input value (by name) to state 
-                    value={title || ''} // Two Way - get data from state to input value
-                />
+                    <label htmlFor="amount">Amount:</label>
+                    <input
+                        name="amount"
+                        id="amount"
+                        type="number"
+                        placeholder="Enter amount"
+                        onChange={HandleEdit}
+                        value={amount || ''}
+                        disabled={!isAddingManually && !bookId}
+                    />
 
-                <label htmlFor="amount">Amount:</label>
-                <input
-                    name="amount"
-                    id="amount"
-                    type="number"
-                    placeholder="Enter amount"
-                    onChange={HandleEdit} // Two Way - get data from input value (by name) to state 
-                    value={amount || ''} // Two Way - get data from state to input value
-                />
+                    <button disabled={!isAddingManually && !bookId}>Save</button>
+                </form>
 
-                <button>Save</button>
-            </form>
+                {!bookId && (
+                    <button onClick={() => setIsAddingManually(!isAddingManually)}>
+                        {isAddingManually ? "Cancel Manual Entry" : "Add Manually"}
+                    </button>
+                )}
+            </section>
 
-        </section>
+            {!bookId && !isAddingManually && (
+                <section>
+                    <BookAdd />
+                </section>
+            )}
+        </div>
     )
 }

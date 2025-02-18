@@ -15,12 +15,12 @@ export function AppHeader() {
     useEffect(() => {
         if (!isMenuOpen || !elNav.current || window.innerWidth > 768) return
 
-        utilService.animateCSS(elNav.current, 'fadeInTopRight')
+        utilService.animateCSS(elNav.current, 'fadeInTopRight', true)
 
         function handleClickOutside({ target }) {
             // Check if the click was outside the open navigation and menu-toggle button
             if (!target.closest('.nav-links') && !target.closest('.menu-toggle')) {
-                utilService.animateCSS(elNav.current, 'fadeOutTopRight')
+                utilService.animateCSS(elNav.current, 'fadeOutTopRight', true)
                     .then(() => setIsMenuOpen(false))
             }
         }

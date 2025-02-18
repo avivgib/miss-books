@@ -11,6 +11,7 @@ export const bookService = {
     save,
     getEmptyBook,
     getDefaultFilter,
+    addGoogleBook,
 }
 
 function query(filterBy = {}) {
@@ -43,14 +44,37 @@ function save(book) {
 }
 
 function getEmptyBook(title = '', listPrice) {
-    return { 
-        title, 
+    return {
+        title,
         listPrice: listPrice || { amount: '', currencyCode: 'ILS', isOnSale: false }
     }
 }
 
 function getDefaultFilter() {
     return { title: '', amount: '' }
+}
+
+function addGoogleBook(googleBook) {
+    console.log(`googleBook: ${googleBook}`)
+    debugger
+    const newBook = {
+        id: googleBook.id,
+        title: googleBook.volumeInfo.title || 'Unnamed',
+        authors: googleBook.volumeInfo.authors || ['Unknown'],
+        listPrice: {
+            amount: googleBook.saleInfo.listPrice.amount || 0,
+            currencyCode: googleBook.saleInfo.listPrice.currencyCode || 'USD',
+            isOnSale: googleBook.saleInfo.saleability === 'FOR_SALE'
+        },
+        thumbnail: googleBook.volumeInfo.imageLinks.thumbnail || '',
+    }
+
+    return storageService.query(BOOK_KEY)
+        .then(books => {
+            books.push(newBook)
+            utilService.saveToStorage(BOOK_KEY, books)
+            return newBook
+        })
 }
 
 function _filterBooks(books, filterBy) {

@@ -5,10 +5,15 @@ export function UserMsg() {
     const [msg, setMsg] = useState(null)
 
     useEffect(() => {
-        eventBusService.on('show-user-msg', (msg) => {
+        const onRemoveListener = eventBusService.on('show-user-msg', (msg) => {
             setMsg(msg)
             setTimeout(closeMsg, 2000)
         })
+
+        return ()=> {
+            onRemoveListener()
+        }
+        
     }, [])
 
     function closeMsg() {

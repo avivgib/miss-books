@@ -41,7 +41,7 @@ export function BookDetails() {
             .then(book => setBook(book))
     }
 
-    if (!book) return 'Loading...'
+    if (!book) return 'Load Details...'
 
     function getBookLng(lng) {
         switch (lng) {
