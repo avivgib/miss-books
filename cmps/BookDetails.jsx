@@ -8,6 +8,7 @@ const { useState, useEffect } = React
 export function BookDetails() {
 
     const [book, setBook] = useState(null)
+    console.log('book', book)
     const params = useParams()
     console.log("params:", params)
 
@@ -69,9 +70,6 @@ export function BookDetails() {
 
     return (
         <section className="book-details">
-            {/* <button className="back-btn" onClick={onBack}>
-                <i className="fas fa-arrow-left"></i> Back
-            </button> */}
 
             <button className="back-btn">
                 <Link to="/book"><i className="fas fa-arrow-left"></i>Back</Link>
@@ -100,7 +98,7 @@ export function BookDetails() {
                     </div>
 
                     <div><strong>Categories: </strong>
-                        {categories && categories.length > 0 ? categories.join(", ") : 'None'}
+                        {categories && categories.length > 0 ? categories.join(', ') : 'None'}
                     </div>
 
                     <div><strong>Language: </strong>

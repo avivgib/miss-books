@@ -1,5 +1,3 @@
-import { booksService } from "../services/books.service.js"
-
 const { useState, useEffect } = React
 
 export function BookFilter({ filterBy, onSetFilterBy }) {

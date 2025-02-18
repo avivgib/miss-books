@@ -3,6 +3,8 @@ import { utilService } from './util.service.js'
 import { books as defaultBooks } from '../assets/data/books.js'
 
 const BOOK_KEY = 'bookDB'
+const CACHE_STORAGE_KEY = 'googleSearchCache'
+const gCache = utilService.loadFromStorage(CACHE_STORAGE_KEY) || {}
 
 export const booksService = {
     query,
@@ -11,6 +13,7 @@ export const booksService = {
     save,
     getEmptyBook,
     getDefaultFilter,
+    getGoogleBooks,
     addGoogleBook,
 }
 
@@ -43,10 +46,24 @@ function save(book) {
     }
 }
 
-function getEmptyBook(title = '', listPrice) {
+function addGoogleBook(googleBook) {
+    return storageService.post(BOOK_KEY, googleBook, false)
+}
+
+function getEmptyBook(title = '',authors='',  amount = '', description = '', pageCount = '', language = 'en' ) {
     return {
         title,
-        listPrice: listPrice || { amount: '', currencyCode: 'ILS', isOnSale: false }
+        authors,
+        description,
+        pageCount,
+        thumbnail: '/assets/img/default.png',
+        language,
+        listPrice: { 
+            amount, 
+            currencyCode: 'ILS', 
+            isOnSale: false 
+        },
+        // reviews: []
     }
 }
 
@@ -54,27 +71,56 @@ function getDefaultFilter() {
     return { title: '', amount: '' }
 }
 
-function addGoogleBook(googleBook) {
-    console.log(`googleBook: ${googleBook}`)
-    debugger
-    const newBook = {
-        id: googleBook.id,
-        title: googleBook.volumeInfo.title || 'Unnamed',
-        authors: googleBook.volumeInfo.authors || ['Unknown'],
-        listPrice: {
-            amount: googleBook.saleInfo.listPrice.amount || 0,
-            currencyCode: googleBook.saleInfo.listPrice.currencyCode || 'USD',
-            isOnSale: googleBook.saleInfo.saleability === 'FOR_SALE'
-        },
-        thumbnail: googleBook.volumeInfo.imageLinks.thumbnail || '',
+function getGoogleBooks(bookName) {
+    if (bookName === '') return Promise.resolve()
+    const googleBooks = gCache[bookName]
+    if (googleBooks) {
+        return Promise.resolve(googleBooks)
     }
 
-    return storageService.query(BOOK_KEY)
-        .then(books => {
-            books.push(newBook)
-            utilService.saveToStorage(BOOK_KEY, books)
-            return newBook
+    const url = `https://www.googleapis.com/books/v1/volumes?printType=books&q=${bookName}`
+    return axios.get(url)
+        .then(res => {
+            const data = res.data.items || []
+            console.log(`data from network... ${data}`)
+            const books = _formatGoogleBooks(data)
+            gCache[bookName] = books
+            utilService.saveToStorage(CACHE_STORAGE_KEY, gCache)
+            return books
         })
+        .catch(err => {
+            console.log(`Error fetching books: ${err}`)
+            return []
+        })
+}
+
+
+// ~~~~~~~~~~~~~~~~LOCAL FUNCTIONS~~~~~~~~~~~~~~~~~~~
+
+
+function _formatGoogleBooks(googleBooks) {
+    return googleBooks.map(googleBook => {
+        const { volumeInfo } = googleBook
+        const book = {
+            id: googleBook.id,
+            title: volumeInfo.title,
+            description: volumeInfo.description,
+            pageCount: volumeInfo.pageCount,
+            authors: volumeInfo.authors,
+            categories: volumeInfo.categories,
+            publishedDate: volumeInfo.publishedDate,
+            language: volumeInfo.language,
+            listPrice: {
+                amount: utilService.getRandomIntInclusive(80, 500),
+                currencyCode: "ILS",
+                isOnSale: Math.random() > 0.7
+            },
+            // reviews: []
+        }
+        if (volumeInfo.imageLinks) book.thumbnail = volumeInfo.imageLinks.thumbnail
+        // else book.thumbnail = '../assets/img/default.png'
+        return book
+    })
 }
 
 function _filterBooks(books, filterBy) {

@@ -1,0 +1,32 @@
+.google-search-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-width: 400px;
+}
+
+.google-search-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+.google-search-list li:last-child {
+    border-bottom: none;
+}
+
+.google-search-list button {
+    background-color: var(--clr3);
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.google-search-list button:hover {
+    background-color: var(--clr3);
+}

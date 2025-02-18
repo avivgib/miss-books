@@ -1,33 +1,43 @@
+import { booksService } from "../services/books.service.js"
+import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
+import { AddGoogleBook } from "../cmps/AddGoogleBook.jsx"
+
 const { useState, useEffect } = React
 const { useParams, useNavigate } = ReactRouterDOM
 
-import { booksService } from "../services/books.service.js"
-import { BookAdd } from "../cmps/BookAdd.jsx"
-
 export function BookEdit() {
     const [bookToEdit, setBookToEdit] = useState(booksService.getEmptyBook())
-    const { title, listPrice } = bookToEdit
-    const amount = listPrice.amount || ''
 
     const navigate = useNavigate()
-    const { bookId } = useParams()
-    const [isAddingManually, setIsAddingManually] = useState(false)
+    const params = useParams()
+    const [isManual, setIsManual] = useState(true)
 
     useEffect(() => {
-        if (bookId) loadBook()
+        if (!params.bookId) return
+
+        loadBook()
     }, [])
 
     function loadBook() {
-        booksService.get(bookId)
+        booksService.get(params.bookId)
             .then(setBookToEdit)
             .catch(err => console.log('err', err))
     }
 
-    function HandleEdit({ target }) {
-        const field = target.name
-        let value = target.value
+    function onSaveBook(ev) {
+        ev.preventDefault()
 
-        switch (target.type) {
+        booksService.save(bookToEdit)
+            .then(() => showSuccessMsg(bookId ? 'Book Edited' : 'Book Added'))
+            .catch(() => showErrorMsg(bookId ? 'Problem editing book' : 'Problem adding book'))
+            .finally(() => navigate('/book'))
+    }
+
+    function handleChange({ target }) {
+        const { type, name: prop } = target
+        let { value } = target
+
+        switch (type) {
             case 'number':
             case 'range':
                 value = +value
@@ -37,76 +47,75 @@ export function BookEdit() {
                 break
         }
 
-        setBookToEdit(prevBookToEdit => {
-            const updatedListPrice = {
-                ...prevBookToEdit.listPrice,
-                amount: field === 'amount' ? value : prevBookToEdit.listPrice.amount || '',
-                currencyCode: prevBookToEdit.listPrice.currencyCode || 'ILS',
-                isOnSale: prevBookToEdit.listPrice.isOnSale || false
-            }
-
-            return field === 'amount'
-                ? { ...prevBookToEdit, listPrice: updatedListPrice }
-                : { ...prevBookToEdit, listPrice: updatedListPrice, [field]: value }
-        })
+        setBookToEdit(prevBookToEdit => ({ ...prevBookToEdit, [prop]: value }))
     }
 
-    function onSaveBook(ev) {
-        ev.preventDefault()
+    function handleChangeListPrice({ target }) {
+        const { type, name: prop } = target
+        let { value } = target
 
-        booksService.save(bookToEdit)
-            .then(() => {
-                navigate('/book')
-                showSuccessMsg(bookId ? 'Book Edited' : 'Book Added')
-            })
-            .catch(() => {
-                showErrorMsg(bookId ? 'Problem editing book' : 'Problem adding book')
-            })
+        switch (type) {
+            case 'range':
+            case 'number':
+                value = +value
+                break
+
+            case 'checkbox':
+                value = target.checked
+                break
+        }
+
+        setBookToEdit(prevBookToEdit => ({
+            ...prevBookToEdit,
+            listPrice: { ...prevBookToEdit.listPrice, [prop]: value }
+        }))
     }
+
+    const {
+        title,
+        authors,
+        listPrice,
+        description,
+        pageCount
+    } = bookToEdit
 
     return (
-        <div>
-            <section className="book-edit">
-                <h1>{bookId ? 'Edit Book' : 'Add New Book'}</h1>
+        <section className="book-edit">
+            <h1>{params.bookId ? 'Edit' : 'Add New'} Book</h1>
 
+            {!params.bookId && (
+                <div className="mode-toggle">
+                    <button onClick={() => setIsManual(prevIsManual => !prevIsManual)}>
+                        {!isManual ? 'Add Manually' : 'Search on Google'}
+                    </button>
+                </div>
+            )}
+
+            {params.bookId || isManual ? (
                 <form onSubmit={onSaveBook}>
                     <label htmlFor="title">Title:</label>
-                    <input
-                        name="title"
-                        id="title"
-                        type="text"
-                        placeholder="Enter book title"
-                        onChange={HandleEdit}
-                        value={title || ''}
-                        disabled={!isAddingManually && !bookId} // מבטל את הקלט אם לא מוסיפים ידנית
-                    />
+                    <input onChange={handleChange} value={title || ''} name="title" id="title" type="text" />
 
-                    <label htmlFor="amount">Amount:</label>
-                    <input
-                        name="amount"
-                        id="amount"
-                        type="number"
-                        placeholder="Enter amount"
-                        onChange={HandleEdit}
-                        value={amount || ''}
-                        disabled={!isAddingManually && !bookId}
-                    />
+                    <label htmlFor="authors">Authors: </label>
+                    <input onChange={handleChange} value={authors} id='authors' type="text" name='authors' />
 
-                    <button disabled={!isAddingManually && !bookId}>Save</button>
+                    <label htmlFor="description">Description: </label>
+                    <input onChange={handleChange} value={description} id='description' type="text" name='description' />
+
+                    <label htmlFor="pages">Number of pages: </label>
+                    <input onChange={handleChange} value={pageCount} id='pages' type="number" name='pageCount' />
+
+                    <label htmlFor="price">Price: </label>
+                    <input onChange={handleChangeListPrice} value={listPrice.amount} id='price' type="number" name='amount' />
+
+                    <label htmlFor="isOnSale">On Sale: </label>
+                    <input onChange={handleChangeListPrice} checked={listPrice.isOnSale} id='isOnSale' type="checkbox" name='isOnSale' />
+
+                    <button>Save</button>
                 </form>
-
-                {!bookId && (
-                    <button onClick={() => setIsAddingManually(!isAddingManually)}>
-                        {isAddingManually ? "Cancel Manual Entry" : "Add Manually"}
-                    </button>
-                )}
-            </section>
-
-            {!bookId && !isAddingManually && (
-                <section>
-                    <BookAdd />
-                </section>
+            ) : (
+                <AddGoogleBook />
             )}
-        </div>
+        </section>
     )
 }
