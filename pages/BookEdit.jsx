@@ -37,6 +37,10 @@ export function BookEdit() {
         const { type, name: prop } = target
         let { value } = target
 
+        if (prop === 'authors') {
+            value = value.split(',').map(author => author.trim())            
+        }
+
         switch (type) {
             case 'number':
             case 'range':
@@ -97,7 +101,7 @@ export function BookEdit() {
                     <input onChange={handleChange} value={title || ''} name="title" id="title" type="text" />
 
                     <label htmlFor="authors">Authors: </label>
-                    <input onChange={handleChange} value={authors} id='authors' type="text" name='authors' />
+                    <input onChange={handleChange} value={[authors] || []} id='authors' type="text" name='authors' />
 
                     <label htmlFor="description">Description: </label>
                     <input onChange={handleChange} value={description} id='description' type="text" name='description' />
