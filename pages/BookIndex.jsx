@@ -1,7 +1,7 @@
 import { BookDetails } from "../cmps/BookDetails.jsx"
 import { BookFilter } from "../cmps/BookFilter.jsx"
 import { BookList } from "../cmps/BookList.jsx"
-import { bookService } from "../services/book.service.js"
+import { booksService } from "../services/books.service.js"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 
 const { useState, useEffect } = React
@@ -11,7 +11,7 @@ const { Link } = ReactRouterDOM
 export function BookIndex() {
     const [books, setBooks] = useState(null)
     // console.log('books:', books)
-    const [filterBy, setFilterBy] = useState(bookService.getDefaultFilter())
+    const [filterBy, setFilterBy] = useState(booksService.getDefaultFilter())
     // console.log('filterBy:', filterBy)
 
     useEffect(() => {
@@ -19,14 +19,14 @@ export function BookIndex() {
     }, [filterBy])
 
     function loadBooks() {
-        bookService.query(filterBy)
+        booksService.query(filterBy)
             .then(books => {
                 setBooks(books)
             })
     }
 
     function onRemoveBook(bookId) {
-        bookService.remove(bookId)
+        booksService.remove(bookId)
             .then(() => {
                 setBooks(prevBooks => prevBooks.filter(book => book.id !== bookId))
                 showSuccessMsg('Book Removed')

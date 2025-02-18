@@ -1,11 +1,11 @@
 const { useState, useEffect } = React
 const { useParams, useNavigate } = ReactRouterDOM
 
-import { bookService } from "../services/book.service.js"
+import { booksService } from "../services/books.service.js"
 import { BookAdd } from "../cmps/BookAdd.jsx"
 
 export function BookEdit() {
-    const [bookToEdit, setBookToEdit] = useState(bookService.getEmptyBook())
+    const [bookToEdit, setBookToEdit] = useState(booksService.getEmptyBook())
     const { title, listPrice } = bookToEdit
     const amount = listPrice.amount || ''
 
@@ -18,7 +18,7 @@ export function BookEdit() {
     }, [])
 
     function loadBook() {
-        bookService.get(bookId)
+        booksService.get(bookId)
             .then(setBookToEdit)
             .catch(err => console.log('err', err))
     }
@@ -54,7 +54,7 @@ export function BookEdit() {
     function onSaveBook(ev) {
         ev.preventDefault()
 
-        bookService.save(bookToEdit)
+        booksService.save(bookToEdit)
             .then(() => {
                 navigate('/book')
                 showSuccessMsg(bookId ? 'Book Edited' : 'Book Added')

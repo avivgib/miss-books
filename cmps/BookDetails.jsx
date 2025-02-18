@@ -1,4 +1,4 @@
-import { bookService } from "../services/book.service.js"
+import { booksService } from "../services/books.service.js"
 import { LongTxt } from "../cmps/LongTxt.jsx"
 const { useParams } = ReactRouterDOM
 const { Link, useNavigate } = ReactRouterDOM
@@ -37,7 +37,7 @@ export function BookDetails() {
     }, [params.bookId])
 
     function loadBook() {
-        bookService.get(params.bookId)
+        booksService.get(params.bookId)
             .then(book => setBook(book))
     }
 

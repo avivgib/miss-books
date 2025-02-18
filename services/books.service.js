@@ -4,7 +4,7 @@ import { books as defaultBooks } from '../assets/data/books.js'
 
 const BOOK_KEY = 'bookDB'
 
-export const bookService = {
+export const booksService = {
     query,
     get,
     remove,

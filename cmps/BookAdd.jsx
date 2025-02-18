@@ -1,5 +1,5 @@
 const { useState, useEffect } = React
-import { bookService } from "../services/book.service.js"
+import { booksService } from "../services/books.service.js"
 
 const GOOGLE_BOOKS_API = "https://www.googleapis.com/books/v1/volumes?q="
 
@@ -49,7 +49,7 @@ export function BookAdd() {
             },
         }
         debugger
-        bookService.addGoogleBook(formattedBook)
+        booksService.addGoogleBook(formattedBook)
     }
 
     return (

@@ -1,4 +1,4 @@
-import { bookService } from "../services/book.service.jsx"
+import { booksService } from "../services/books.service.js"
 
 const { useState, useEffect } = React
 
