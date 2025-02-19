@@ -2,6 +2,7 @@ import { BookFilter } from "../cmps/BookFilter.jsx"
 import { BookList } from "../cmps/BookList.jsx"
 import { booksService } from "../services/books.service.js"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
+import { Loader } from "../cmps/Loader.jsx"
 
 const { useState, useEffect } = React
 const { Link } = ReactRouterDOM
@@ -38,7 +39,7 @@ export function BookIndex() {
         setFilterBy({ ...filterBy })
     }
 
-    if (!books) return <div>Loading...</div>
+    if (!books) return <Loader />
 
     return (
         <section className="books-container">
