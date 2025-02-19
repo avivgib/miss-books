@@ -30,12 +30,10 @@ export function BookIndex() {
                 setBooks(prevBooks => prevBooks.filter(book => book.id !== bookId))
                 showSuccessMsg('Book Removed')
             })
-            .catch(err => {
-                console.log('Problem removing book:', err)
-                showErrorMsg('Book Not Removed')
-            })
+            .catch(() => showErrorMsg('Book Not Removed'))
     }
-    
+
+
     function onSetFilterBy(filterBy) {
         setFilterBy({ ...filterBy })
     }

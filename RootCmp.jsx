@@ -1,4 +1,3 @@
-const { useState } = React
 const Router = ReactRouterDOM.HashRouter
 const { Routes, Route } = ReactRouterDOM
 
@@ -26,7 +25,6 @@ export function App() {
                         <Route path="/book" element={<BookIndex />} />
                         <Route path="/book/:bookId" element={<BookDetails />} />
                         <Route path="/book/edit" element={<BookEdit />} />
-                        <Route path="/book/edit" element={<AddGoogleBook />} />
                         <Route path="/book/edit/:bookId" element={<BookEdit />} />
                     </Routes>
                 </main>

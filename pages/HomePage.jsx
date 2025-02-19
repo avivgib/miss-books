@@ -11,11 +11,8 @@ export function HomePage() {
 
                 <p>Organize and explore your personal library with ease</p>
 
-                <button
-                    className="explore-btn"
-                    onClick={() => navigate('/book')}>
-                    <i className="fa-solid fa-search"></i>
-                    Start Exploring
+                <button className="explore-btn" onClick={() => navigate('/book')}>
+                    <i className="fa-solid fa-search"></i> Start Exploring
                 </button>
             </div>
         </section>

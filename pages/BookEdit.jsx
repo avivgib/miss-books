@@ -101,7 +101,7 @@ export function BookEdit() {
                     <input onChange={handleChange} value={title || ''} name="title" id="title" type="text" />
 
                     <label htmlFor="authors">Authors: </label>
-                    <input onChange={handleChange} value={[authors] || []} id='authors' type="text" name='authors' />
+                    <input onChange={handleChange} value={authors} id='authors' type="text" name='authors' />
 
                     <label htmlFor="description">Description: </label>
                     <input onChange={handleChange} value={description} id='description' type="text" name='description' />
