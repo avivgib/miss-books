@@ -5,9 +5,18 @@ import { utilService } from "../services/util.service.js"
 
 export function AppHeader() {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
+    let isClosable = useRef(false)
     const elNav = useRef(null)
 
     function toggleMenu() {
+        if (!isMenuOpen) {
+            isClosable.current = false
+            
+            setTimeout(() => {
+                isClosable.current = true
+            }, 1500);
+        }
+
         setIsMenuOpen(prevIsMenuOpen => !prevIsMenuOpen)
     }
 
@@ -19,7 +28,7 @@ export function AppHeader() {
 
         function handleClickOutside({ target }) {
             // Check if the click was outside the open navigation and menu-toggle button
-            if (!target.closest('.nav-links') && !target.closest('.menu-toggle')) {
+            if (!target.closest('.nav-links') && isClosable.current) {
                 utilService.animateCSS(elNav.current, 'fadeOutTopRight', true)
                     .then(() => setIsMenuOpen(false))
             }
