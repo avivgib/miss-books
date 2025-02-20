@@ -19,6 +19,8 @@
 @import 'cmps/book-edit.css';
 @import 'cmps/google-books-list.css';
 @import 'cmps/loader.css';
+@import 'cmps/add-review.css';
+@import 'cmps/star-rating.css';
 
 /* MQ */
 @import 'setup/mq.css';

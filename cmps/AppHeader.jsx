@@ -28,7 +28,7 @@ export function AppHeader() {
 
         function handleClickOutside({ target }) {
             // Check if the click was outside the open navigation and menu-toggle button
-            if (!target.closest('.nav-links') && isClosable.current) {
+            if (!target.closest('.nav-links') && !target.closest('.menu-toggle') && isClosable.current) {
                 utilService.animateCSS(elNav.current, 'fadeOutTopRight', true)
                     .then(() => setIsMenuOpen(false))
             }

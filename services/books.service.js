@@ -63,7 +63,7 @@ function getEmptyBook(title = '',authors='',  amount = '', description = '', pag
             currencyCode: 'ILS', 
             isOnSale: false 
         },
-        // reviews: []
+        reviews: []
     }
 }
 
@@ -115,7 +115,7 @@ function _formatGoogleBooks(googleBooks) {
                 currencyCode: "ILS",
                 isOnSale: Math.random() > 0.7
             },
-            // reviews: []
+            reviews: []
         }
         if (volumeInfo.imageLinks) book.thumbnail = volumeInfo.imageLinks.thumbnail
         // else book.thumbnail = '../assets/img/default.png'

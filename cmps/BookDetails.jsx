@@ -1,22 +1,40 @@
+const { useState, useEffect } = React
+// const {  } = ReactRouter
+const { useParams, useNavigate, Link } = ReactRouterDOM
+
 import { booksService } from "../services/books.service.js"
 import { LongTxt } from "../cmps/LongTxt.jsx"
-const { useParams } = ReactRouterDOM
-const { Link, useNavigate } = ReactRouterDOM
-
-const { useState, useEffect } = React
+import { AddReview } from "../cmps/AddReview.jsx"
+import { ReviewList } from "./ReviewList.jsx"
+import { showErrorMsg } from "../services/event-bus.service.js"
+import { reviewService } from "../services/review.service.js"
+import { Loader } from "./Loader.jsx"
 
 export function BookDetails() {
-
     const [book, setBook] = useState(null)
     console.log('book', book)
+    const [isLoading, setIsLoading] = useState(true)
+    const [isLoadingReview, setIsLoadingReview] = useState(false)
+    const [isShowReviewModal, setIsShowReviewModal] = useState(false)
+
     const params = useParams()
     console.log("params:", params)
+    const navigate = useNavigate()
 
-    const getReadingCategory = (pageCount) => {
-        if (pageCount > 500) return 'Serious Reading'
-        if (pageCount > 200) return 'Descent Reading'
-        if (pageCount < 100) return 'Light Reading'
-        return 'Standard Reading'
+    useEffect(() => {
+        loadBook()
+    }, [params.bookId])
+
+    function loadBook() {
+        booksService.get(params.bookId)
+            .then(setBook)
+            .catch(() => {
+                showErrorMsg('Couldn\'t get book...')
+                navigate('/book')
+            })
+            .finally(() => {
+                setIsLoading(false)
+            })
     }
 
     const getBookLifeStatus = (publishedDate) => {
@@ -27,22 +45,51 @@ export function BookDetails() {
         return yearsOnAir > 10 ? 'Vintage' : 'New'
     }
 
-    const getBookPriceStatus = (amount) => {
-        if (amount > 150) return 'expensive-price'
-        if (amount < 20) return 'cheap-price'
-        return ''
+    const getReadingCategory = (pageCount) => {
+        if (pageCount > 500) return 'Serious Reading'
+        if (pageCount > 200) return 'Descent Reading'
+        if (pageCount < 100) return 'Light Reading'
+        return 'Standard Reading'
     }
 
-    useEffect(() => {
-        loadBook()
-    }, [params.bookId])
-
-    function loadBook() {
-        booksService.get(params.bookId)
-            .then(book => setBook(book))
+    function onToggleReviewModal() {
+        setIsShowReviewModal((prevIsReviewModal) => !prevIsReviewModal)
     }
 
-    if (!book) return 'Load Details...'
+    function onSaveReview(reviewToAdd) {
+        console.log('🔥 onSaveReview called with:', reviewToAdd) // האם זה מופיע?
+        
+        setIsLoadingReview(true)
+    
+        reviewService.saveReview(book.id, reviewToAdd)
+            .then((review => {
+                console.log('✅ Review saved:', review) // האם זה מופיע?
+                
+                setBook(prevBook => {
+                    const updatedReviews = [review, ...prevBook.reviews]
+                    console.log('Previous Book:', prevBook) // האם זה מופיע?
+                    console.log('Updated Reviews:', updatedReviews)
+                    return { ...prevBook, reviews: updatedReviews }
+                })
+            }))
+            .catch(() => showErrorMsg(`Review to ${book.title} Failed!`))
+            .finally(() => setIsLoadingReview(false))
+    }
+    
+
+    function onRemoveReview(reviewId) {
+        setIsLoadingReview(true)
+        reviewService.removeReview(book.id, reviewId)
+            .then(() => {
+                setBook(prevBook => {
+                    const filteredReviews = prevBook.reviews.filter(review => review.id !== reviewId)
+                    return { ...prevBook, reviews: filteredReviews }
+                })
+            })
+            .finally(() => setIsLoadingReview(false))
+    }
+
+    if (isLoading || !book) return <Loader />
 
     function getBookLng(lng) {
         switch (lng) {
@@ -53,6 +100,12 @@ export function BookDetails() {
             default:
                 return 'English'
         }
+    }
+
+    const getBookPriceStatus = (amount) => {
+        if (amount > 150) return 'expensive-price'
+        if (amount < 20) return 'cheap-price'
+        return ''
     }
 
     const {
@@ -132,6 +185,23 @@ export function BookDetails() {
                     <i className="fas fa-arrow-right"></i>
                 </Link>
             </button>
+
+            <hr />
+            <button onClick={onToggleReviewModal}>Add Review</button>
+            {isShowReviewModal && (
+                <AddReview
+                    toggleReview={onToggleReviewModal}
+                    onSaveReview={onSaveReview}
+                />
+            )}
+
+            <div className='review-container'>
+                {!isLoadingReview
+                    ? <ReviewList reviews={book.reviews} onRemoveReview={onRemoveReview} />
+                    : <Loader />
+                }
+            </div>
+
         </section>
     )
 }
